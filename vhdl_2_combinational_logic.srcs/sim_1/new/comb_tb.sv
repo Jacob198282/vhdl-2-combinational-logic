@@ -1,4 +1,4 @@
-`timescale 1ns / 1ps
+`timescale 1us / 1ns
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
 // Engineer: 
@@ -34,7 +34,7 @@ module comb_tb();
     // Loop max counter value
     localparam MAX_LOOP = 16;
     // Loop counter
-    integer count;
+    integer count = 0;
     
     // Declaring test signals
     logic [3:0] sw_i = 0;
@@ -49,9 +49,10 @@ module comb_tb();
     
     initial begin
         for (count = 0; count < MAX_LOOP; count = count + 1) begin
+            sw_i <= count;
+            #(DELAY_TIME);
             $display("----------------------------------");
             $display("Switch position: %0b", count);
-            sw_i <= count;
             // checking if zero is correctly displayed
             if (led7_seg_o == NUM_0 && count == 0) begin
                 $display("[SUCCESS] 0 is displayed correctly for %0b switch combination", count);
